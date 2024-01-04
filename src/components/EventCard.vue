@@ -17,20 +17,52 @@ defineProps({
     type: Object,
     required: true,
   },
+  index: {
+    type: Number,
+    required: true,
+  }
 })
 
-function status(editstatus) {
+function status() {
   const Editstatus = data_Store.editstatus;
+  console.log (Editstatus)
 
+  if (Editstatus === 'off') {
+   console.log('off')
+   data_Store.editstatus = 'on'
+  } else {
+    data_Store.editstatus = 'off'    
+  }
  
-  data_Store.getMode(Editstatus).catch(error => {
+    
+}
+ 
+
+function fetchPauzelocs(route) {
+  const Routenr = 54;
+  console.log ("pauzelocs")
+
+  data_Store.getPauzeLocs(Routenr).catch(error => {
   this.router.push(
       {
         name: 'ErrorDisplay',
         params: { error: error }
       }
     )
-  })
+  }) 
+  const pauzeloc1 = (data_Store.pauzelocs.pauzeloc[0].restaurant);
+     console.log (pauzeloc1);
+     const pauzeloc2 = (data_Store.pauzelocs.pauzeloc[1].restaurant);
+     console.log (pauzeloc2);
+
+
+
+  console.log ('ik leef nog')
+
+}
+
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
 }
 
 </script>
@@ -40,21 +72,31 @@ function status(editstatus) {
 
   <div class="w3-col  w3-container s11 m11 l11 ">  
     <div class="event-card">
-
+      {{ index }}
       <table>
         <tr>
-          <td><b>
+          <td valign="top"><b>
             Datum:
           </b></td>
           <td WIDTH="100%"><b>
             <div class="w3-col  m2 l2">
               <div class="datum" >
                 {{event.datum}} 
+                <div v-if ="editstatus == 'on'">
+                  <button v-on:click="delete">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
+                  </button>
+                </div>
               </div>
   
             </div>
             <div class="w3-col w3-container s1 m1 l1 ">
-              {{ event.route }} 
+                {{ event.route }}   
+                <div v-if ="editstatus == 'on'">
+                  <button v-on:click="delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
+                  </button>
+                </div>
             </div>
             <div class="w3-col w3-container s3 m6 l6 ">
               {{ event.naam }}  
@@ -84,9 +126,20 @@ function status(editstatus) {
         <tr>
           <td  valign="top">
             Pauze:
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
+            <div v-if ="editstatus == 'on'">
+                <div class="w3-dropdown-hover">
+                  <button class="w3-dropdown-hover" v-on:click="fetchPauzelocs">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
+                  </button>
+                  <div class="w3-dropdown-content w3-bar-block w3-border">
+                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant }} </a>
+                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant2 }} </a>
+                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant3 }} </a>
+                </div>
+             </div>
+            </div>
           </td>
-          <td>
+          <td valign="top">
             {{ event.restaurant }} in {{ event.plaats}}  , telefoon: {{ event.telefoon }}
           </td>
         </tr>
@@ -141,3 +194,33 @@ function status(editstatus) {
   text-align: right;
 }
 </style>
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 500px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}

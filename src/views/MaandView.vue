@@ -25,11 +25,20 @@ defineProps({
 onMounted(() => {
   const Jaar = ref(jaar.value);
   const Maand = ref(maand.value);
-  const Mode = ref(editstatus);
+//  const Mode = ref(editstatus);
 
  
 
   data_Store.getEvents(Jaar, Maand ).catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
+  }),
+  
+  data_Store.getPauzeLocs(80).catch(error => {
     this.router.push(
       {
         name: 'ErrorDisplay',
@@ -71,9 +80,9 @@ onMounted(() => {
     <div class="w3-row w3-white"> 
       <br>    
 
-      <div v-for="events in data_Store.events">
+      <div v-for="(events) in data_Store.events">
         <div class="events">
-          <EventCard v-for="event in events" :key="event.id" :event="event" />
+          <EventCard v-for="(event, index) in events" :key="event.id" :event="event"  :index="index"/>
         </div>
       </div>
     </div>

@@ -21,4 +21,8 @@ export default {
   getEvent(id) {
     return apiClient.get('?id=' + id)
   },
+
+  getPauzeLocs(routenr) {
+    return apiClient.get("/?routenr=" + routenr)
+  },
 }
