@@ -8,7 +8,7 @@ export
         events: [],
         jaar: '2024',
         maand: '2',
-        editstatus: 'off',
+        editstatus: ["off","off","off"],
         mode: '',
         pauzelocs: [{"pauzeloc":[{"pauze_loc_id":59,"restaurant":"Gemeenschapscentrum \"De Pracht\""},{"pauze_loc_id":51,"restaurant":"\"Hut van Mie Pils\" (per tafel contant afrekenen)"}]}],
 
@@ -41,8 +41,8 @@ export
             this.editstatus = 'off';            
           }          
         },
-
-        getPauzeLocs(routenr) {
+        
+         getPauzeLocs(routenr) {
           return EventService.getPauzeLocs(routenr )
           .then(response => {
               this.pauzelocs = response.data 
