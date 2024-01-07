@@ -36,17 +36,12 @@ onMounted(() => {
         params: { error: error }
       }
     )
-  }),
-  
-  data_Store.getPauzeLocs(80).catch(error => {
-    this.router.push(
-      {
-        name: 'ErrorDisplay',
-        params: { error: error }
-      }
-    )
   })
-});
+})
+
+
+
+
 
 
 

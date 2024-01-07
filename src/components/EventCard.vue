@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { usedataStore } from '@/stores/dataStore.js'
 
 //Programma maand
@@ -10,7 +10,7 @@ const data_Store = usedataStore()
 
 const editstatus = computed(() => data_Store.editstatus);
 
-
+const currentValue = ref(null)
 
 defineProps({
   event: {
@@ -20,25 +20,53 @@ defineProps({
   index: {
     type: Number,
     required: true,
-  }
+  },
+
+
 })
+
+
+
 
 function status(index) {
   const Editstatus = data_Store.editstatus;
-  console.log (Editstatus)
+
 
   if (data_Store.editstatus[index] === 'off') {
    console.log(data_Store.editstatus[index])
    data_Store.editstatus[index] = 'on'
   } else  {
     console.log(data_Store.editstatus[index])
-    data_Store.editstatus[index] = 'off'    
-  
+    data_Store.editstatus[index] = 'off'      
   }
+ }
+ function onChange(event,index) {
  
-    
-}
- 
+    const pPauzeloc = (event.target.value);
+
+    if (pPauzeloc === "event.pauzeloc_id") {
+     data_Store.eventpauzeloc[index] = data_Store.events.events[index].pauzeloc_id 
+     event.restaurant = event.restaurant1
+    }
+    if (pPauzeloc === "event.pauzeloc2_id") {
+     data_Store.eventpauzeloc[index] = data_Store.events.events[index].pauzeloc2_id 
+     event.restaurant = event.restaurant2
+    }
+    if (pPauzeloc === "event.pauzeloc3_id") {
+     data_Store.eventpauzeloc[index] = data_Store.events.events[index].pauzeloc3_id 
+     event.restaurant = event.restaurant3
+    }
+    console.log (data_Store.eventpauzeloc[index])
+   console.log(data_Store.events.events[index].datum)
+   data_Store.pushPPauzeloc(data_Store.events.events[index].datum, data_Store.eventpauzeloc[index] ).catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
+  })
+} 
 
 
 
@@ -103,21 +131,18 @@ function status(index) {
         <tr>
           <td  valign="top">
             Pauze:
-            <div v-if ="editstatus[index] == 'on'">
-                <div class="w3-dropdown-hover">
-                  <button class="w3-dropdown-hover" v-on:click="fetchPauzelocs">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
-                  </button>
-                  <div class="w3-dropdown-content w3-bar-block w3-border">
-                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant }} </a>
-                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant2 }} </a>
-                  <a href="#" class="w3-bar-item w3-button">{{ event.restaurant3 }} </a>
-                </div>
-             </div>
-            </div>
+ 
           </td>
           <td valign="top">
             {{ event.restaurant }} in {{ event.plaats}}  , telefoon: {{ event.telefoon }}
+              <div v-if ="editstatus[index] == 'on'">
+              <select  @change="onChange($event, index)" v-model="currentValue">
+                <option value=event.pauzeloc_id>{{ event.restaurant1 }} </option>
+                <option value=event.pauzeloc2_id>{{ event.restaurant2 }} </option>
+                <option value=event.pauzeloc3_id>{{ event.restaurant3 }} </option>
+              </select>
+  
+            </div>
           </td>
         </tr>
         <tr>

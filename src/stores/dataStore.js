@@ -8,9 +8,12 @@ export
         events: [],
         jaar: '2024',
         maand: '2',
-        editstatus: ["off","off","off"],
-        mode: '',
-        pauzelocs: [{"pauzeloc":[{"pauze_loc_id":59,"restaurant":"Gemeenschapscentrum \"De Pracht\""},{"pauze_loc_id":51,"restaurant":"\"Hut van Mie Pils\" (per tafel contant afrekenen)"}]}],
+        editstatus: ["off","off","off","off","off","off","off","off","off","off"],
+        update: false,
+        eventdatum: [],
+        eventroute: [0,0,0,0,0,0,0,0,0,0],
+        eventpauzeloc: [0,0,0,0,0,0,0,0,0,0],
+
 
 
     }),
@@ -33,27 +36,19 @@ export
                 throw error
             })
         },
-
-        getMode(mode) {
-          if (mode === 'off') {
-            this.editstatus = 'on';
-          } else  {
-            this.editstatus = 'off';            
-          }          
-        },
         
-         getPauzeLocs(routenr) {
-          return EventService.getPauzeLocs(routenr )
+        pushPPauzeloc(datum, newPauzeloc) {
+          return EventService.pushPPauzeloc(datum, newPauzeloc) 
           .then(response => {
-              this.pauzelocs = response.data 
-
+              
           })
           .catch(error => {
               throw error
           })
-        },
+        }
+    },
 
 
         
-    }
+
  })

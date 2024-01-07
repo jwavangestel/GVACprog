@@ -22,7 +22,7 @@ export default {
     return apiClient.get('?id=' + id)
   },
 
-  getPauzeLocs(routenr) {
-    return apiClient.get("/?routenr=" + routenr)
-  },
-}
+  pushPPauzeloc(datum, newPauzeloc) {
+    return apiClient.post("/?datum=" + datum + "&pauzeplaats=" + newPauzeloc )
+  }
+}  
