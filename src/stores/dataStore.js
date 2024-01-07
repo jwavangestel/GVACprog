@@ -13,6 +13,7 @@ export
         eventdatum: [],
         eventroute: [0,0,0,0,0,0,0,0,0,0],
         eventpauzeloc: [0,0,0,0,0,0,0,0,0,0],
+        allRoutes: [],
 
 
 
@@ -45,10 +46,18 @@ export
           .catch(error => {
               throw error
           })
-        }
+        },
+
+        getAllRoutes() {
+            return EventService.getAllRoutes()
+            .then(response => {
+                this.allRoutes = response.data 
+ 
+            })
+            .catch(error => {
+                throw error
+            })
+        },
+
     },
-
-
-        
-
  })

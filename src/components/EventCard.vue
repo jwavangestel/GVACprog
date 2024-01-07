@@ -37,7 +37,8 @@ function status(index) {
    data_Store.editstatus[index] = 'on'
   } else  {
     console.log(data_Store.editstatus[index])
-    data_Store.editstatus[index] = 'off'      
+    data_Store.editstatus[index] = 'off'  
+    data_Store.update = true   
   }
  }
  function onChange(event,index) {

@@ -22,6 +22,10 @@ export default {
     return apiClient.get('?id=' + id)
   },
 
+  getAllRoutes() {
+    return apiClient.get("/?allroutes=' '" )
+  },
+
   pushPPauzeloc(datum, newPauzeloc) {
     return apiClient.post("/?datum=" + datum + "&pauzeplaats=" + newPauzeloc )
   }

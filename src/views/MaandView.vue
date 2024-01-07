@@ -6,11 +6,13 @@ import { usedataStore } from '@/stores/dataStore.js'
 //Programma maand
 
 const events = ref(null)
+const allRoutes = ref(null)
 const data_Store = usedataStore()
 
 const jaar = computed(() => data_Store.jaar);
 const maand = computed(() => data_Store.maand);
 const editstatus = computed(() => data_Store.editstatus);
+const update = computed(() => data_Store.update);
 console.log(editstatus.value);
 
 
@@ -25,9 +27,9 @@ defineProps({
 onMounted(() => {
   const Jaar = ref(jaar.value);
   const Maand = ref(maand.value);
+
 //  const Mode = ref(editstatus);
 
- 
 
   data_Store.getEvents(Jaar, Maand ).catch(error => {
     this.router.push(
@@ -36,11 +38,40 @@ onMounted(() => {
         params: { error: error }
       }
     )
+  }),
+  data_Store.getAllRoutes().catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
   })
+
+
+}),
+
+
+watch ([update], () => {
+  if (update) {
+    console.log ("beer");
+    const Jaar = ref(jaar.value);
+    const Maand = ref(maand.value);
+
+//  const Mode = ref(editstatus);
+
+
+    data_Store.getEvents(Jaar, Maand ).catch(error => {
+      this.router.push(
+        {
+         name: 'ErrorDisplay',
+          params: { error: error }
+        }
+      )
+    })
+    data_Store.update = false;  
+  }  
 })
-
-
-
 
 
 
