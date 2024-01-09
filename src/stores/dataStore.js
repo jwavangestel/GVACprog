@@ -14,6 +14,7 @@ export
         eventroute: [0,0,0,0,0,0,0,0,0,0],
         eventpauzeloc: [0,0,0,0,0,0,0,0,0,0],
         allRoutes: [],
+        changeRoute: ["off"]
 
 
 

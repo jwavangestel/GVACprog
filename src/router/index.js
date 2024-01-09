@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MaandView from '../views/MaandView.vue'
+import Allroutes from '../views/Allroutes.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,15 @@ const router = createRouter({
 
       component: () => import('../views/Startlocaties.vue')
     },
+    {
+      path: '/allroutes',
+      name: 'allroutes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/Allroutes.vue')
+    },
+  
     {
       path: '/about',
       name: 'about',
