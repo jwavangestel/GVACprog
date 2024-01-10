@@ -10,7 +10,7 @@ const data_Store = usedataStore()
 
 const editstatus = computed(() => data_Store.editstatus);
 const popupRoute = computed(() => data_Store.changeRoute);
-const apRoute = computed(() => data_Store.allRoutes.Proutes);
+const apRoute = computed(() => data_Store.allRoutes.routenr);
 
 const currentValue = ref(null)
 
@@ -101,7 +101,7 @@ console.log (index)
 </script>
 
 <template>
- {{ apRoute }}
+
   <div class="w3-row w3-white"> 
 
   <div class="w3-col  w3-container s11 m11 l11 ">  
@@ -131,12 +131,12 @@ console.log (index)
                 {{ event.route }}  
               </b>
                 <div v-if ="editstatus[index] == 'on'">
-                  <select  v-model="apRoute.routenr" >  
+                  <select  v-model="apRoute[index].routenr" >  
                     <option></option> 
                     <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr" :route="route"
                       :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  
                     </select>
-                    <p>{{ apRoute.xid }}</p>
+                    <p>{{ apRoute[index].routenr }}</p>
                 </div>
 
             </div>
