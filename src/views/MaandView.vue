@@ -39,7 +39,7 @@ onMounted(() => {
       }
     )
   }),
-  data_Store.getAllRoutes().catch(error => {
+  data_Store.getAllRoutes(Jaar, Maand ).catch(error => {
     this.router.push(
       {
         name: 'ErrorDisplay',

@@ -22,8 +22,8 @@ export default {
     return apiClient.get('?id=' + id)
   },
 
-  getAllRoutes() {
-    return apiClient.get("/?allroutes=' '" )
+  getAllRoutes(jaar,maand) {
+    return apiClient.get("/?allroutes=' '&Rjaar=" + jaar + "&Rmaand=" + maand )
   },
 
   pushPPauzeloc(datum, newPauzeloc) {

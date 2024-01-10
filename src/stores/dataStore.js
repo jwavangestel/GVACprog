@@ -14,7 +14,8 @@ export
         eventroute: [0,0,0,0,0,0,0,0,0,0],
         eventpauzeloc: [0,0,0,0,0,0,0,0,0,0],
         allRoutes: [],
-        changeRoute: ["off"]
+        changeRoute: ["off"],
+        currentValue: 0
 
 
 
@@ -49,10 +50,11 @@ export
           })
         },
 
-        getAllRoutes() {
-            return EventService.getAllRoutes()
+        getAllRoutes(jaar, maand) {
+            return EventService.getAllRoutes(jaar.value, maand.value)
             .then(response => {
                 this.allRoutes = response.data 
+                console.log (this.allRoutes)
  
             })
             .catch(error => {

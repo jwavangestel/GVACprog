@@ -10,6 +10,7 @@ const data_Store = usedataStore()
 
 const editstatus = computed(() => data_Store.editstatus);
 const popupRoute = computed(() => data_Store.changeRoute);
+const apRoute = computed(() => data_Store.allRoutes.Proutes);
 
 const currentValue = ref(null)
 
@@ -26,6 +27,7 @@ defineProps({
 
 
 })
+
 
 
 
@@ -84,12 +86,22 @@ function status(index) {
   })
 } 
 
+function onChangeRoute(event, index) {
+ 
+console.log (event.target.value)
+console.log (event)
+console.log (currentValue)
+console.log (index)
+
+ 
+} 
+
 
 
 </script>
 
 <template>
- 
+ {{ apRoute }}
   <div class="w3-row w3-white"> 
 
   <div class="w3-col  w3-container s11 m11 l11 ">  
@@ -100,33 +112,43 @@ function status(index) {
           <td valign="top"><b>
             Datum:
           </b></td>
-          <td WIDTH="100%"><b>
+          <td WIDTH="100%">
             <div class="w3-col  m2 l2">
               <div class="datum" >
+                <b>
                 {{event.datum}} 
                 <div v-if ="editstatus[index] == 'on'">
                   <button v-on:click="delete">
                       <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
                   </button>
                 </div>
+                </b>
               </div>
   
             </div>
             <div class="w3-col w3-container s1 m1 l1 ">
-                {{ event.route }}   
+              <b>
+                {{ event.route }}  
+              </b>
                 <div v-if ="editstatus[index] == 'on'">
-                  <button v-on:click="changeRoute(index)">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
-                  </button>
+                  <select  v-model="apRoute.routenr" >  
+                    <option></option> 
+                    <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr" :route="route"
+                      :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  
+                    </select>
+                    <p>{{ apRoute.xid }}</p>
                 </div>
+
             </div>
+            <b>
             <div class="w3-col w3-container s3 m6 l6 ">
               {{ event.naam }}  
             </div>  
             <div class="w3-col w3-container s3 m3 l3 ">
               {{event.heen10}}+{{ event.terug10 }} / {{event.heen}}+{{ event.terug }}
             </div>
-          </b></td>
+            </b>
+          </td>
         </tr>
         <tr>
           <td>
@@ -188,24 +210,8 @@ function status(index) {
       </button>
     </p>
     </div> 
-      <div v-if = "popupRoute =='on'">
-        <div class="modal">
-              <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-inner">      
-              <button @click="close">&times;</button>
-              <table>
-                <tr v-for="route in data_Store.allRoutes.allroutes" :key="route.routenr" :route="route">
-                  <td>
-                    {{ route.routenr }}
-                  </td>
-                  <td>
-                    {{ route.naam }}
-                  </td>
-                </tr>
-              </table>      
-            </div>
-              </div>
-          </div>
+      <div v-if = "popupRoute =='on'">     
+
       </div>
   </div>
 
