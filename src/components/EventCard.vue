@@ -89,10 +89,17 @@ function status(index) {
 function onChangeRoute(event, index) {
  
 console.log (event.target.value)
-console.log (event)
-console.log (currentValue)
 console.log (index)
-
+data_Store.pushPRoute(data_Store.events.events[index].datum, 
+                      data_Store.events.events[index].pauzeloc_id,
+                      event.target.value ).catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
+  })
  
 } 
 
@@ -131,9 +138,9 @@ console.log (index)
                 {{ event.route }}  
               </b>
                 <div v-if ="editstatus[index] == 'on'">
-                  <select  v-model="apRoute[index].routenr" >  
+                  <select  @change="onChangeRoute($event, index)" v-model="apRoute[index].routenr" >  
                     <option></option> 
-                    <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr" :route="route"
+                    <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr"
                       :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  
                     </select>
                     <p>{{ apRoute[index].routenr }}</p>

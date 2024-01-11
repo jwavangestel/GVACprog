@@ -28,5 +28,9 @@ export default {
 
   pushPPauzeloc(datum, newPauzeloc) {
     return apiClient.post("/?datum=" + datum + "&pauzeplaats=" + newPauzeloc )
+  },
+
+  pushPRoute(datum, PPauzeloc, PRoute) {
+    return apiClient.post("/?Rdatum=" + datum + "&route=" + PRoute + "&pauzeplaats=" + PPauzeloc )
   }
 }  

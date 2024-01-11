@@ -61,6 +61,16 @@ export
                 throw error
             })
         },
+        
+        pushPRoute(datum, PPauzeloc, PRoute) {
+          return EventService.pushPRoute(datum, PPauzeloc, PRoute) 
+          .then(response => {
+              
+          })
+          .catch(error => {
+              throw error
+          })
+        },
 
     },
  })
