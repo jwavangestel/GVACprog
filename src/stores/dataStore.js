@@ -15,9 +15,67 @@ export
         eventpauzeloc: [0,0,0,0,0,0,0,0,0,0],
         allRoutes: [],
         changeRoute: ["off"],
-        currentValue: 0
-
-
+        currentValue: 0,
+        Ppauzeloc: [  [       
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ],
+                    [
+                        {},{},{}
+                    ]
+                ]],
+        PPauzeloc : [
+                        
+                            [
+                                {
+                                    "pauzeloc_id": 15,
+                                    "restaurant": 'aap'
+                                },
+                                {
+                                    "pauzeloc_id": 16,
+                                    "restaurant": 'beer'
+                                }
+                            ],
+                            [
+                                {
+                                    "pauzeloc_id": 21,
+                                    "restaurant": 'wim'
+                                },
+                                {
+                                    "pauzeloc_id": 22,
+                                    "restaurant":'zus'
+                                },
+                                {
+                                    "pauzeloc_id": 23,
+                                    "restaurant": 'jet'
+                                }
+                            ]
+                        
+                    ],
 
     }),
     // getters
@@ -54,8 +112,6 @@ export
             return EventService.getAllRoutes(jaar.value, maand.value)
             .then(response => {
                 this.allRoutes = response.data 
-                console.log (this.allRoutes)
- 
             })
             .catch(error => {
                 throw error
@@ -71,6 +127,16 @@ export
               throw error
           })
         },
+
+        pushPRoute(datum, PPauzeloc, PRoute) {
+            return EventService.pushPRoute(datum, PPauzeloc, PRoute) 
+            .then(response => {
+                
+            })
+            .catch(error => {
+                throw error
+            })
+          },
 
     },
  })

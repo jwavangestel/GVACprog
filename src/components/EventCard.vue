@@ -11,6 +11,7 @@ const data_Store = usedataStore()
 const editstatus = computed(() => data_Store.editstatus);
 const popupRoute = computed(() => data_Store.changeRoute);
 const apRoute = computed(() => data_Store.allRoutes.routenr);
+const apPauze = computed(() => data_Store.events);
 
 const currentValue = ref(null)
 
@@ -27,6 +28,17 @@ defineProps({
 
 
 })
+for (let y = 0; y < 3 ; y++) {
+  let datum = data_Store.events.events[y].datum
+//console.log (datum)
+  let z = 0
+  for (let i = 0; i < 6 ; i++) {
+    if (datum === data_Store.events.PpauzeL[i].datum) {
+      data_Store.Ppauzeloc[0][y] [z]= data_Store.events.PpauzeL[i]
+      z = z + 1
+    }
+  }
+}
 
 
 
@@ -100,14 +112,37 @@ data_Store.pushPRoute(data_Store.events.events[index].datum,
       }
     )
   })
+  data_Store.update = true   
  
 } 
+
+function onChangePauze(event, index) {
+ 
+ console.log (event.target.value)
+ console.log (index)
+ console.log (data_Store.events.events[index].datum)
+ console.log (data_Store.events.events[index].route)
+ data_Store.pushPPauzeloc(data_Store.events.events[index].datum, 
+                       event.target.value).catch(error => {
+     this.router.push(
+       {
+         name: 'ErrorDisplay',
+         params: { error: error }
+       }
+     )
+   })
+   data_Store.update = true   
+  
+ } 
 
 
 
 </script>
 
 <template>
+    
+
+ 
 
   <div class="w3-row w3-white"> 
 
@@ -139,7 +174,7 @@ data_Store.pushPRoute(data_Store.events.events[index].datum,
               </b>
                 <div v-if ="editstatus[index] == 'on'">
                   <select  @change="onChangeRoute($event, index)" v-model="apRoute[index].routenr" >  
-                    <option></option> 
+
                     <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr"
                       :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  
                     </select>
@@ -182,11 +217,12 @@ data_Store.pushPRoute(data_Store.events.events[index].datum,
           <td valign="top">
             {{ event.restaurant }} in {{ event.plaats}}  , telefoon: {{ event.telefoon }}
               <div v-if ="editstatus[index] == 'on'">
-              <select  @change="onChange($event, index)" v-model="currentValue">
-                <option value=event.pauzeloc_id>{{ event.restaurant1 }} </option>
-                <option value=event.pauzeloc2_id>{{ event.restaurant2 }} </option>
-                <option value=event.pauzeloc3_id>{{ event.restaurant3 }} </option>
-              </select>
+              <select   @change="onChangePauze($event, index)" v-model="apPauze.Ppauze[index].pauzeloc_id">
+                    <option v-for="Spauze in data_Store.Ppauzeloc[0][index]" 
+                      :value="Spauze.pauzeloc_id">{{ Spauze.pauzeloc_id }} {{ Spauze.restaurant }} </option>  
+                    </select>
+                    <p>{{ apPauze.Ppauze[index].pauzeloc_id }}</p>
+
   
             </div>
           </td>

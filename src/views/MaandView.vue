@@ -13,7 +13,7 @@ const jaar = computed(() => data_Store.jaar);
 const maand = computed(() => data_Store.maand);
 const editstatus = computed(() => data_Store.editstatus);
 const update = computed(() => data_Store.update);
-console.log(editstatus.value);
+const PpauzeL = computed(() => data_Store.events.PauzeL);
 
 
 
@@ -28,8 +28,7 @@ onMounted(() => {
   const Jaar = ref(jaar.value);
   const Maand = ref(maand.value);
 
-//  const Mode = ref(editstatus);
-
+//  const Mode = ref(editstatus);0
 
   data_Store.getEvents(Jaar, Maand ).catch(error => {
     this.router.push(
@@ -38,7 +37,13 @@ onMounted(() => {
         params: { error: error }
       }
     )
+// vul alternatieve pauzelocaties 
+
   }),
+
+
+
+
   data_Store.getAllRoutes(Jaar, Maand ).catch(error => {
     this.router.push(
       {
@@ -47,6 +52,7 @@ onMounted(() => {
       }
     )
   })
+ 
 
 
 }),
@@ -54,7 +60,6 @@ onMounted(() => {
 
 watch ([update], () => {
   if (update) {
-    console.log ("beer");
     const Jaar = ref(jaar.value);
     const Maand = ref(maand.value);
 
@@ -81,12 +86,14 @@ watch ([update], () => {
 </script>
 
 <template>
+
   <div class="w3-container w3-white">
 
     <div class="w3-row w3-white">
 
       <div class="w3-col w3-container m2 l2 ">
       </div>
+
       <div class="w3-col w3-container m8 l8 ">
           <h3><center>GVAC wandelprogramma Februari 2024</center></h3>
           <p>
@@ -106,11 +113,11 @@ watch ([update], () => {
     <div class="w3-row w3-white"> 
       <br>    
 
-      <div v-for="(events) in data_Store.events">
+
         <div class="events">
-          <EventCard v-for="(event, index) in events" :key="event.id" :event="event"  :index="index" />
+          <EventCard v-for="(event, index) in data_Store.events.events" :key="event.id" :event="event"  :index="index" />
         </div>
-      </div>
+
     </div>
 
 
