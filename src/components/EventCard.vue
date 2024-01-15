@@ -28,11 +28,14 @@ defineProps({
 
 
 })
-for (let y = 0; y < 3 ; y++) {
+
+let aantalEvents = (data_Store.events.events.length) 
+let aantalPauzepl = (data_Store.events.PpauzeL.length) 
+for (let y = 0; y < aantalEvents ; y++) {
   let datum = data_Store.events.events[y].datum
 //console.log (datum)
   let z = 0
-  for (let i = 0; i < 6 ; i++) {
+  for (let i = 0; i < aantalPauzepl ; i++) {
     if (datum === data_Store.events.PpauzeL[i].datum) {
       data_Store.Ppauzeloc[0][y] [z]= data_Store.events.PpauzeL[i]
       z = z + 1
@@ -135,6 +138,11 @@ function onChangePauze(event, index) {
   
  } 
 
+ function formatDateDay(date) {
+      const options = {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('nl', options)
+    }
+
 
 
 </script>
@@ -155,15 +163,11 @@ function onChangePauze(event, index) {
             Datum:
           </b></td>
           <td WIDTH="100%">
-            <div class="w3-col  m2 l2">
+            <div class="w3-col  m3 l3">
               <div class="datum" >
                 <b>
-                {{event.datum}} 
-                <div v-if ="editstatus[index] == 'on'">
-                  <button v-on:click="delete">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
-                  </button>
-                </div>
+                  {{ formatDateDay(event.datum) }}
+
                 </b>
               </div>
   
@@ -178,12 +182,11 @@ function onChangePauze(event, index) {
                     <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr"
                       :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  
                     </select>
-                    <p>{{ apRoute[index].routenr }}</p>
                 </div>
 
             </div>
             <b>
-            <div class="w3-col w3-container s3 m6 l6 ">
+            <div class="w3-col w3-container s3 m5 l5 ">
               {{ event.naam }}  
             </div>  
             <div class="w3-col w3-container s3 m3 l3 ">
@@ -217,7 +220,7 @@ function onChangePauze(event, index) {
           <td valign="top">
             {{ event.restaurant }} in {{ event.plaats}}  , telefoon: {{ event.telefoon }}
               <div v-if ="editstatus[index] == 'on'">
-              <select   @change="onChangePauze($event, index)" v-model="apPauze.Ppauze[index].pauzeloc_id">
+              <select   @change="onChangePauze($event, index)" v-model="apPauze.Ppauze[index].pauzeplaats">
                     <option v-for="Spauze in data_Store.Ppauzeloc[0][index]" 
                       :value="Spauze.pauzeloc_id">{{ Spauze.pauzeloc_id }} {{ Spauze.restaurant }} </option>  
                     </select>
@@ -275,7 +278,7 @@ function onChangePauze(event, index) {
 
 .datum {
   text-align: left;
-  margin-top: 4px;
+  margin-top: 0px;
 }
 .icons {
   text-align: right;

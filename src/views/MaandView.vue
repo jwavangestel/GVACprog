@@ -1,7 +1,14 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
+import Datepicker from 'vue3-datepicker'
+import 'vue-date-pick/dist/vueDatePick.css';
 import EventCard from '@/components/EventCard.vue'
 import { usedataStore } from '@/stores/dataStore.js'
+
+
+
+
+
 
 //Programma maand
 
@@ -15,7 +22,7 @@ const editstatus = computed(() => data_Store.editstatus);
 const update = computed(() => data_Store.update);
 const PpauzeL = computed(() => data_Store.events.PauzeL);
 
-
+const picked = ref(new Date())
 
 defineProps({
   event: {
@@ -119,6 +126,17 @@ watch ([update], () => {
         </div>
 
     </div>
+
+  <div class="w3-col w3-container m9 l9 ">
+  </div>
+  <div>
+    <button>
+      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+      <VueDatePicker v-model="date" :disabled-week-days="[0, 1, 3, 5, 6]" />
+    </button>
+   
+  </div>
+
 
 
     <div class="w3-row w3-white">
