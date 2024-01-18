@@ -21,8 +21,52 @@ const maand = computed(() => data_Store.maand);
 const editstatus = computed(() => data_Store.editstatus);
 const update = computed(() => data_Store.update);
 const PpauzeL = computed(() => data_Store.events.PauzeL);
+const DateR = computed(() => data_Store.date);
 
-const picked = ref(new Date())
+const date = ref();
+const startDate = ref(new Date(2024, 1));
+const format = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  
+}
+
+
+
+const dateClicked = (date) => {
+    console.log ("muis");
+    const dateD = date.getDate();
+    const dateM = date.getMonth() + 1;
+    const dateY = date.getFullYear();
+
+
+    let nulD = ''
+    let nulM = ''
+    if (dateD < 10) {
+      nulD = '0'
+    } 
+    if (dateM < 10) {
+      nulM = '0'
+    } 
+
+    const dateFull = (dateY + '-' + nulM + (dateM) + '-' + nulD + (dateD) );
+    data_Store.dateFull = dateFull
+
+    data_Store.createProgramma(data_Store.dateFull, dateY, dateM).catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
+
+  })
+  data_Store.update = true 
+ 
+} 
+  
 
 defineProps({
   event: {
@@ -132,8 +176,19 @@ watch ([update], () => {
   <div>
     <button>
       <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-      <VueDatePicker v-model="date" :disabled-week-days="[0, 1, 3, 5, 6]" />
+      <VueDatePicker v-model="date"   
+  
+            placeholder="nieuw datum toevoegen" 
+            locale="nl" selectText="Selecteer" 
+            auto-apply 
+            no-today :highlight-week-days="[2, 4]" :disabled-week-days="[0, 1, 3, 5, 6]" 
+            :enable-time-picker="false" 
+            :preview-format="format"
+            :start-date="startDate"
+            @date-update="dateClicked"
+            />
     </button>
+  
    
   </div>
 

@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://gvacdata:8890',
-//  baseURL: 'https://ranadata.janenlenneke.nl',
+//  baseURL: 'https://gvacdata:8890',
+  baseURL: 'https://gvacdata.janenlenneke.nl',
 //  baseURL: 'https://ranadata.erfgoedhuisveldhoven.nl',
   withCredentials: false,
   headers: {
@@ -32,5 +32,10 @@ export default {
 
   pushPRoute(datum, PPauzeloc, PRoute) {
     return apiClient.post("/?Rdatum=" + datum + "&route=" + PRoute + "&pauzeplaats=" + PPauzeloc )
+  },
+
+  putPRoute(dateFull, dateY, dateM)  {
+    return apiClient.put("/?Pdatum=" + dateFull + "&Pjaar=" + dateY + "&Pmaand=" + dateM )
+    console.log ("evenknie")
   }
 }  

@@ -8,6 +8,7 @@ export
         events: [],
         jaar: '2024',
         maand: '2',
+        dateFull: '',
         editstatus: ["off","off","off","off","off","off","off","off","off","off"],
         update: false,
         eventdatum: [],
@@ -128,15 +129,15 @@ export
           })
         },
 
-        pushPRoute(datum, PPauzeloc, PRoute) {
-            return EventService.pushPRoute(datum, PPauzeloc, PRoute) 
+        createProgramma(dateFull, dateY, dateM) {
+            return EventService.putPRoute(dateFull, dateY, dateM) 
             .then(response => {
                 
             })
             .catch(error => {
                 throw error
             })
-          },
+        },
 
     },
  })
