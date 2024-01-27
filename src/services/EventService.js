@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-//  baseURL: 'https://gvacdata:8890',
-  baseURL: 'https://gvacdata.janenlenneke.nl',
+  baseURL: 'https://gvacdata:8890',
+//  baseURL: 'https://gvacdata.janenlenneke.nl',
 //  baseURL: 'https://ranadata.erfgoedhuisveldhoven.nl',
   withCredentials: false,
   headers: {

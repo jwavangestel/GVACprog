@@ -91,7 +91,7 @@ export
         getEvents(jaar, maand) {
             return EventService.getEvents(jaar.value, maand.value )
             .then(response => {
-                this.events = response.data 
+                return this.events = response.data 
  
             })
             .catch(error => {
@@ -112,7 +112,7 @@ export
         getAllRoutes(jaar, maand) {
             return EventService.getAllRoutes(jaar.value, maand.value)
             .then(response => {
-                this.allRoutes = response.data 
+                return this.allRoutes = response.data 
             })
             .catch(error => {
                 throw error

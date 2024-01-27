@@ -177,7 +177,7 @@ function onChangePauze(event, index) {
                 {{ event.route }}  
               </b>
                 <div v-if ="editstatus[index] == 'on'">
-                  <select  @change="onChangeRoute($event, index)" v-model="apRoute[index].routenr" >  
+                  <select  @change="onChangeRoute($event, index)" v-model="data_Store.allRoutes.routenr[index].routenr" >  
 
                     <option v-for="pRoute in data_Store.allRoutes.allroutes" :key="pRoute.routenr"
                       :value="pRoute.routenr">{{ pRoute.routenr }} {{ pRoute.naam }} </option>  

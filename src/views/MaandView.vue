@@ -90,7 +90,7 @@ onMounted(() => {
     )
 // vul alternatieve pauzelocaties 
 
-  }),
+  })
 
 
 
@@ -104,12 +104,13 @@ onMounted(() => {
     )
   })
  
+})
 
 
-}),
 
 
-watch ([update], () => {
+
+watch (update, async () => {
   if (update) {
     const Jaar = ref(jaar.value);
     const Maand = ref(maand.value);
@@ -117,7 +118,7 @@ watch ([update], () => {
 //  const Mode = ref(editstatus);
 
 
-    data_Store.getEvents(Jaar, Maand ).catch(error => {
+    const events = await data_Store.getEvents(Jaar, Maand ).catch(error => {
       this.router.push(
         {
          name: 'ErrorDisplay',
@@ -125,6 +126,30 @@ watch ([update], () => {
         }
       )
     })
+
+    let aantalEvents = (data_Store.events.events.length) 
+    let aantalPauzepl = (data_Store.events.PpauzeL.length) 
+    for (let y = 0; y < aantalEvents ; y++) {
+      let datum = data_Store.events.events[y].datum
+    //console.log (datum)
+      let z = 0
+      for (let i = 0; i < aantalPauzepl ; i++) {
+        if (datum === data_Store.events.PpauzeL[i].datum) {
+          data_Store.Ppauzeloc[0][y] [z]= data_Store.events.PpauzeL[i]
+          z = z + 1
+        }
+      }
+    } 
+
+    data_Store.getAllRoutes(Jaar, Maand ).catch(error => {
+    this.router.push(
+      {
+        name: 'ErrorDisplay',
+        params: { error: error }
+      }
+    )
+  })
+  
     data_Store.update = false;  
   }  
 })
@@ -175,10 +200,10 @@ watch ([update], () => {
   </div>
   <div>
     <button>
-      <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+
       <VueDatePicker v-model="date"   
   
-            placeholder="nieuw datum toevoegen" 
+            placeholder="nieuwe datum toevoegen" 
             locale="nl" selectText="Selecteer" 
             auto-apply 
             no-today :highlight-week-days="[2, 4]" :disabled-week-days="[0, 1, 3, 5, 6]" 
