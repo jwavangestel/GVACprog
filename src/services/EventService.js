@@ -36,6 +36,9 @@ export default {
 
   putPRoute(dateFull, dateY, dateM)  {
     return apiClient.put("/?Pdatum=" + dateFull + "&Pjaar=" + dateY + "&Pmaand=" + dateM )
-    console.log ("evenknie")
+  },
+
+  deletePRoute(Ddatum, Droute, Dpauzeplaats)  {
+    return apiClient.delete("/?Ddatum=" + Ddatum + "&Droute=" + Droute + "&Dpauzeplaats=" + Dpauzeplaats )
   }
 }  

@@ -139,5 +139,17 @@ export
             })
         },
 
+        deleteProgramma(Ddatum, Droute, Dpauzeplaats) {
+            return EventService.deletePRoute(Ddatum, Droute, Dpauzeplaats)
+            .then(response => {
+                
+            })
+            .catch(error => {
+                throw error
+            })
+        },
+
+ 
+
     },
  })
